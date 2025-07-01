@@ -1,4 +1,4 @@
-local fill_command = require("fill")
+local fill_command = require("src.fill")
 
 local VERSION = "1.0.0"
 local AUTHOR = "Pirulax"
