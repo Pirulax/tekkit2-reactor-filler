@@ -11,9 +11,9 @@ local FUEL_ROD = {id = "ic2:itemreactorrods", data = 13} -- NetherStart Enriched
 
 
 local PATTERNS = {
-    ['4chamber']: {
+    ['4chamber'] = {
         size = { rows = 6, columns = 7 },
-        slots = [
+        slots = {
             { HEAT_PLATING, COMP_VENT, ELEC_OC_HEAT_VENT, COMP_VENT, ELEC_OC_HEAT_VENT, COMP_VENT, HEAT_PLATING },
             { COMP_VENT, ELEC_OC_HEAT_VENT, FUEL_ROD, ELEC_OC_HEAT_VENT, FUEL_ROD, ELEC_OC_HEAT_VENT, COMP_VENT },
 
@@ -22,7 +22,7 @@ local PATTERNS = {
 
             { ELEC_OC_HEAT_VENT, FUEL_ROD, ELEC_OC_HEAT_VENT, COMP_VENT, ELEC_OC_HEAT_VENT, FUEL_ROD, ELEC_OC_HEAT_VENT },
             { COMP_VENT, ELEC_OC_HEAT_VENT, COMP_VENT, HEAT_PLATING, COMP_VENT, ELEC_OC_HEAT_VENT, COMP_VENT }
-        ]
+        }
     }
 }
 

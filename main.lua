@@ -6,7 +6,7 @@ local AUTHOR = "Pirulax"
 local ARGS = {...};
 
 local function show_help()
-    print("Usage: " .. ARGS[0] ... " [options]")
+    print("Usage: " .. ARGS[0] .. " [options]")
     print("Options:")
     print("  help       Show this help message")
     print("  version    Show the version of the script")
