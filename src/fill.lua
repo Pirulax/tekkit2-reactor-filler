@@ -148,7 +148,7 @@ local function show_usage(args)
     print("\tup, down")
 end
 
-function fill(args) 
+return function(args) 
     -- 
     -- Parse the arguments
     --
