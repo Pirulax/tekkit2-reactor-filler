@@ -151,15 +151,15 @@ end
 --end
 
 -- Fill the reactor currently at `side` of the turtle according to the pattern
--- @param core_inventory The inventory of the reactor core
+-- @param reactor The reactor to fill
 -- @param pattern The pattern to fill the reactor with (From the `PATTERNS` table)
-local function fill_reactor(core_inventory, pattern)
+local function fill_reactor(reactor, pattern)
     -- Iterate through the slots in the pattern and fill them
     for row = 0, pattern.size.rows - 1 do
         for col = 0, pattern.size.columns - 1 do
             local item = pattern.slots[row + 1][col + 1]
             local slot = get_or_wait_for_item(item)
-            local name = peripheral.getName(core_inventory)
+            local name = peripheral.getName(reactor)
 
             turtle.select(slot)
             local current 
@@ -172,13 +172,12 @@ local function fill_reactor(core_inventory, pattern)
     print("Reactor filled according to pattern: " .. pattern_id)
 end
 
--- Go forwards until a reactor core is found or the maximum distance is reached
-local function find_core(max_dist)
+-- Go forwards until a reactor core/chamber is found or the maximum distance is reached
+local function find_reactor(max_dist)
     for i = 1, max_dist do
-        local chamber = peripheral.find("ic2:reactor chamber")
-        local core = chamber.getReactorCore() or peripheral.find("ic2:reactor core")
-        if core then
-            return core
+        local reactor = peripheral.find("ic2:reactor chamber") or peripheral.find("ic2:reactor core")
+        if reactor then
+            return reactor
         end
         turtle.forward()
     end
@@ -220,15 +219,15 @@ return function(args)
     --
     local count = 0
     while count < max_count_reactors do
-        local core = find_core(max_search_distance)
+        local reactor = find_reactor(max_search_distance)
 
-        if not core then
-            print("No reactor core found within " .. max_search_distance .. " blocks")
+        if not reactor then
+            print("No reactor core/chamber found within " .. max_search_distance .. " blocks")
             break
         end
 
         print("Filling reactor " .. (count + 1) .. " of " .. max_count_reactors)
-        fill_reactor(core, pattern)
+        fill_reactor(reactor, pattern)
         count = count + 1
     end
     print("Finished filling " .. count .. " reactors.")
