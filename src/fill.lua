@@ -137,7 +137,7 @@ local function find_core(max_dist)
 end
 
 local function show_usage(args)
-    print("Usage: main fill <pattern id> <logistics pipe place pos> [max reactor count to fill] [max search distance (forwards)]")
+    print("Usage: main fill <pattern id> [max reactor count to fill] [max search distance (forwards)]")
     print("In order for this to work, you must give the turtle a 'Provider Module' set up with the items used to fill and also a Chassis MK(1-5) the module can be put in")
     print("Obviously this pipe when placed should connect to a Logistics Pipes network that can provide the necessary items")
     print("Available patterns:")
@@ -178,23 +178,9 @@ return function(args)
             break
         end
 
-        -- Plae the logistics request pipe down now
-        --do
-        --    local slot = find_item_slot({ id = 'logisticspipes:pipe_request' 1})
-        --    turtle.select(slot)
-        --    if place_at == "up" then
-        --        turtle.placeUp()
-        --    elseif place_at == "down" then
-        --        turtle.placeDown()
-        --    end
-        --end
-
         print("Filling reactor " .. (count + 1) .. " of " .. max_count_reactors)
         fill_reactor(core.getInventory(), pattern)
         count = count + 1
-
-        -- Pick up the logistics request pipe
-
     end
     print("Finished filling " .. count .. " reactors.")
 end
