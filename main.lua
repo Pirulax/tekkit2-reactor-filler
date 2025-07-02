@@ -6,7 +6,7 @@ local AUTHOR = "Pirulax"
 local ARGS = {...};
 
 local function show_help()
-    print("Usage: " .. tostring(ARGS[0]) .. " [options]")
+    print("Usage: " .. ARGS[1] .. " [options]")
     print("Options:")
     print("  help       Show this help message")
     print("  version    Show the version of the script")
@@ -18,11 +18,11 @@ local function find_item_slot(id)
 end
 
 
-if ARGS[1] == "help" then
+if ARGS[2] == "help" then
     show_help()
-elseif ARGS[1] == "version" then
+elseif ARGS[2] == "version" then
     print("Reactor Filler v" .. VERSION .. " by " .. AUTHOR)
-elseif ARGS[1] == "fill" then
+elseif ARGS[2] == "fill" then
     fill_command(ARGS)
 else
     show_help()
