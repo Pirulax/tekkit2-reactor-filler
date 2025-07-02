@@ -1,11 +1,14 @@
-local function get_numeric_arg(arg, name, default)
-    local num = tonumber(arg)
-    if not arg or not num then
-        if default then
-            return default
+
+return {
+    get_numeric_arg = function (arg, name, default)
+        local num = tonumber(arg)
+        if not arg or not num then
+            if default then
+                return default
+            end
+            error("Invalid value for " .. name .. ": " .. arg)
+            return nil
         end
-        error("Invalid value for " .. name .. ": " .. arg)
-        return nil
+        return num
     end
-    return num
-end
+}
