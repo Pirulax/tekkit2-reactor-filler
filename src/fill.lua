@@ -137,7 +137,7 @@ local function find_core(max_dist)
 end
 
 local function show_usage(args)
-    print("Usage: " .. args[1] .. " fill <pattern id> <logistics pipe place pos> [max reactor count to fill] [max search distance (forwards)]")
+    print("Usage: main fill <pattern id> <logistics pipe place pos> [max reactor count to fill] [max search distance (forwards)]")
     print("In order for this to work, you must give the turtle a 'Provider Module' set up with the items used to fill and also a Chassis MK(1-5) the module can be put in")
     print("Obviously this pipe when placed should connect to a Logistics Pipes network that can provide the necessary items")
     print("Available patterns:")
@@ -152,7 +152,7 @@ return function(args)
     -- 
     -- Parse the arguments
     --
-    local pattern_id = args[2]
+    local pattern_id = args[1]
     if not pattern_id then
         show_usage(args)
         return
@@ -163,8 +163,8 @@ return function(args)
     end
     local pattern = PATTERNS[pattern_id]
     
-    local max_count_reactors = util.get_numeric_arg(args[3], "max reactor count to fill") or 1
-    local max_search_distance = util.get_numeric_arg(args[4], "max search distance (forwards)", 10)
+    local max_count_reactors = util.get_numeric_arg(args[2], "max reactor count to fill") or 1
+    local max_search_distance = util.get_numeric_arg(args[3], "max search distance (forwards)", 10)
 
     --
     -- Go on filling the reactors
