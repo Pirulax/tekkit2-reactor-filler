@@ -152,7 +152,7 @@ return function(args)
     -- 
     -- Parse the arguments
     --
-    local pattern_id = args[1]
+    local pattern_id = args[2]
     if not pattern_id then
         show_usage(args)
         return
@@ -163,8 +163,8 @@ return function(args)
     end
     local pattern = PATTERNS[pattern_id]
     
-    local max_count_reactors = util.get_numeric_arg(args[2], "max reactor count to fill") or 1
-    local max_search_distance = util.get_numeric_arg(args[3], "max search distance (forwards)", 10)
+    local max_count_reactors = util.get_numeric_arg(args[3], "max reactor count to fill") or 1
+    local max_search_distance = util.get_numeric_arg(args[4], "max search distance (forwards)", 10)
 
     --
     -- Go on filling the reactors
