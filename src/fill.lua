@@ -12,6 +12,7 @@ local ELEC_OC_HEAT_VENT = {id = "ic2:itemheatvent"}
 local FUEL_ROD = {id = "ic2:itemreactorrods", data = 13} -- NetherStart Enriched Dual Rod
 
 
+-- Patterns should have no empty slots, but rather use some filler (like a heat capacity vent)
 local PATTERNS = {
     ['4chamber'] = {
         size = { rows = 6, columns = 7 },
@@ -93,6 +94,33 @@ local function get_or_wait_for_item(item)
     end
 end
 
+
+-- Drop `count` items from the turtles selected slot into the inventory of the given peripheral
+local function drop_item_into_inventory(inventory_peripheral, count)
+    local dir = inventory_peripheral.getName()
+    if dir == 'up' then
+        turtle.dropUp(count)
+    elseif dir == 'down' then
+        turtle.dropDown(count)
+    elseif dir == 'front' then
+        turtle.drop(count)
+    elseif dir == 'back' then
+        turtle.turnRight()
+        turtle.turnRight()
+        turtle.drop(count)
+        turtle.turnRight()
+        turtle.turnRight()
+    elseif dir == 'left' then
+        turtle.turnLeft()
+        turtle.drop(count)
+        turtle.turnRight()
+    elseif dir == 'right' then
+        turtle.turnRight()
+        turtle.drop(count)
+        turtle.turnLeft()
+    end
+end
+
 -- Place the Logistics Pipes Chassis and the provider module into it
 -- @param place_at The position where the chassis should be placed (up, down)
 --local function place_logistics_chassis(place_at)
@@ -130,10 +158,13 @@ local function fill_reactor(core_inventory, pattern)
     for row = 0, pattern.size.rows - 1 do
         for col = 0, pattern.size.columns - 1 do
             local item = pattern.slots[row + 1][col + 1]
-            if item then
-                local slot = get_or_wait_for_item(item)
-                core_inventory.pushItems(slot, 1, col * pattern.size.columns + row)
-            end
+            local slot = get_or_wait_for_item(item)
+            local name = peripheral.getName(core_inventory)
+
+            turtle.select(slot)
+            local current 
+
+            --core_inventory.pushItems(turtle.getNameLocal(), slot, 1, col * pattern.size.columns + row)
         end
     end
 
