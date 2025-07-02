@@ -144,14 +144,13 @@ end
 -- @param pattern The pattern to fill the reactor with (From the `PATTERNS` table)
 local function fill_reactor(reactor, pattern)
     -- Face the reactor
-    local turn_back = util.turn_to_face(reactor.getName())
+    local turn_back = util.turn_to_face(peripheral.getName(reactor))
 
     -- Iterate through the slots in the pattern and fill them
     for row = 0, pattern.size.rows - 1 do
         for col = 0, pattern.size.columns - 1 do
             local item = pattern.slots[row + 1][col + 1]
             local slot = get_or_wait_for_item(item)
-            local name = peripheral.getName(reactor)
 
             turtle.select(slot)
             util.drop_item_into_inventory(reactor, 1)

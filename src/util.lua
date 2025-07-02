@@ -39,7 +39,7 @@ return {
     -- Drop `count` items from the turtles selected slot into the inventory of the given peripheral
     -- Assumes that the turtle is already turned appropriately to drop in the items (eg.: facing the inventory, or it's above/below the turtle)
     drop_item_into_inventory = function (inventory_peripheral, count)
-        local dir = inventory_peripheral.getName()
+        local dir = peripheral.getName(inventory_peripheral)
         if dir == 'up' then
             turtle.dropUp(count)
         elseif dir == 'down' then
