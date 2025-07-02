@@ -45,6 +45,8 @@ end
 local function request_item_from_lp(item)
     for _, name in pairs(peripheral.getNames()) do
         if peripheral.getType(name) == "LogisticsPipes:Request" then -- Logistics Request Pipe
+            print("Requesting item: " .. item.id .. " (data: " .. (item.data or "nil") .. "), status: " .. tostring(status))
+            
             local pipe = peripheral.wrap(name)
             local lp = pipe.getLP()
             local id_builder = lp.getItemIdentifierBuilder()
@@ -53,7 +55,6 @@ local function request_item_from_lp(item)
                 id_builder.setItemData(item.data)
             end
             local status, list = lp.makeItemRequest(id_builder.build(), 1)
-            print("Requesting item: " .. item.id .. " (data: " .. (item.data or "nil") .. "), status: " .. tostring(status))
 
             break
         end
@@ -167,7 +168,7 @@ return function(args)
     local pattern = PATTERNS[pattern_id]
     
     local max_count_reactors = util.get_numeric_arg(args[3], "max reactor count to fill") or 1
-    local max_search_distance = util.get_numeric_arg(args[4], "max search distance (forwards)", 10)
+    local max_search_distance = util.get_numeric_arg(args[4], "max search distance (forwards)", max_count_reactors)
 
     --
     -- Go on filling the reactors
