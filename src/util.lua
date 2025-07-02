@@ -40,14 +40,14 @@ return {
     -- Assumes that the turtle is already turned appropriately to drop in the items (eg.: facing the inventory, or it's above/below the turtle)
     drop_item_into_inventory = function (inventory_peripheral, count)
         local dir = peripheral.getName(inventory_peripheral)
-        if dir == 'up' then
+        if dir == 'top' then
             turtle.dropUp(count)
         elseif dir == 'down' then
             turtle.dropDown(count)
         elseif dir == 'front' then
             turtle.drop(count)
         else
-            error("Inventory peripheral is not in a valid position (up, down, front): " .. dir)
+            error("Inventory peripheral is not in a valid position (top, down, front): " .. dir)
         end
     end,
 }
