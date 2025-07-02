@@ -33,6 +33,10 @@ return {
             return function()
                 turtle.turnLeft()
             end
+        else
+            return function()
+                -- No turn needed, just return a no-op function
+            end
         end
     end,
 
