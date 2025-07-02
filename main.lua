@@ -22,8 +22,17 @@ if ARGS[1] == "help" then
     show_help()
 elseif ARGS[1] == "version" then
     print("Reactor Filler v" .. VERSION .. " by " .. AUTHOR)
-elseif ARGS[1] == "fill" then
-    fill_command(ARGS)
 else
-    show_help()
+    -- 
+    -- Make sure turtle is fuelled up
+    -- We expect fuel to be in slot 1
+    --
+    turtle.select(1)
+    turtle.refuel()
+
+    if ARGS[1] == "fill" then
+        fill_command(ARGS) 
+    else
+        show_help()
+    end
 end

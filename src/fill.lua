@@ -67,7 +67,7 @@ local function request_item_from_lp(item)
     print(stack.getType())
 
     repeat
-        local status, list = pipe.makeRequest(stack)
+        local status, list = pipe.makeRequest(stack) -- TODO: Bug in LP/CC, cant call this method
         print("Requesting item: " .. item.id .. " (data: " .. (item.data or "nil") .. "), status: " .. tostring(status))
         if status ~= "DONE" then
             os.sleep(1)
@@ -85,7 +85,7 @@ local function get_or_wait_for_item(item)
         end
 
         -- Request from LP
-        request_item_from_lp(item)
+        --request_item_from_lp(item)
 
         -- Wait for the item to be added to the inventory
         print("Waiting for item: " .. item.id)
