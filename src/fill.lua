@@ -44,7 +44,7 @@ end
 -- Use an Request Logistics Pipes to request an item
 local function request_item_from_lp(item)
     for _, name in pairs(peripheral.getNames()) do
-        if peripheral.getType(name) == "LogisticsPipes:Normal" then
+        if peripheral.getType(name) == "LogisticsPipes:Request" then -- Logistics Request Pipe
             local pipe = peripheral.wrap(name)
             local lp = pipe.getLP()
             local id_builder = lp.getItemIdentifierBuilder()
@@ -54,8 +54,11 @@ local function request_item_from_lp(item)
             end
             local status, list = lp.makeItemRequest(id_builder.build(), 1)
             print("Requesting item: " .. item.id .. " (data: " .. (item.data or "nil") .. "), status: " .. tostring(status))
+
+            break
         end
     end
+    error("No Logistics Pipes provider found. Make sure you have a Logistics Pipes network set up and a provider module in the turtle's inventory.")
 end
 
 local function get_or_wait_for_item(item)
@@ -179,7 +182,7 @@ return function(args)
         end
 
         print("Filling reactor " .. (count + 1) .. " of " .. max_count_reactors)
-        fill_reactor(core.getInventory(), pattern)
+        fill_reactor(core, pattern)
         count = count + 1
     end
     print("Finished filling " .. count .. " reactors.")
