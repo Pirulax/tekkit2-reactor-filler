@@ -96,6 +96,7 @@ end
 
 
 -- Drop `count` items from the turtles selected slot into the inventory of the given peripheral
+-- Assumes that the turtle is already turned appropriately to drop in the items (eg.: facing the inventory, or it's above/below the turtle)
 local function drop_item_into_inventory(inventory_peripheral, count)
     local dir = inventory_peripheral.getName()
     if dir == 'up' then
@@ -104,20 +105,8 @@ local function drop_item_into_inventory(inventory_peripheral, count)
         turtle.dropDown(count)
     elseif dir == 'front' then
         turtle.drop(count)
-    elseif dir == 'back' then
-        turtle.turnRight()
-        turtle.turnRight()
-        turtle.drop(count)
-        turtle.turnRight()
-        turtle.turnRight()
-    elseif dir == 'left' then
-        turtle.turnLeft()
-        turtle.drop(count)
-        turtle.turnRight()
-    elseif dir == 'right' then
-        turtle.turnRight()
-        turtle.drop(count)
-        turtle.turnLeft()
+    else
+        error("Inventory peripheral is not in a valid position (up, down, front): " .. dir)
     end
 end
 
@@ -154,6 +143,9 @@ end
 -- @param reactor The reactor to fill
 -- @param pattern The pattern to fill the reactor with (From the `PATTERNS` table)
 local function fill_reactor(reactor, pattern)
+    -- Face the reactor
+    local turn_back = util.turn_to_face(reactor.getName())
+
     -- Iterate through the slots in the pattern and fill them
     for row = 0, pattern.size.rows - 1 do
         for col = 0, pattern.size.columns - 1 do
@@ -162,14 +154,14 @@ local function fill_reactor(reactor, pattern)
             local name = peripheral.getName(reactor)
 
             turtle.select(slot)
-            local current 
+            util.drop_item_into_inventory(reactor, 1)
 
             --core_inventory.pushItems(turtle.getNameLocal(), slot, 1, col * pattern.size.columns + row)
         end
     end
 
-    -- Done
-    print("Reactor filled according to pattern: " .. pattern_id)
+    -- Turn back to the original direction (As placed by the player)
+    turn_back()
 end
 
 -- Go forwards until a reactor core/chamber is found or the maximum distance is reached
