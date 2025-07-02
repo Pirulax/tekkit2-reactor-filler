@@ -220,6 +220,8 @@ return function(args)
         print("Filling reactor " .. (count + 1) .. " of " .. max_count_reactors)
         fill_reactor(reactor, pattern)
         count = count + 1
+        
+        turtle.forward()
     end
     print("Finished filling " .. count .. " reactors.")
 end
