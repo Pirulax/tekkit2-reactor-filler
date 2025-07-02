@@ -43,27 +43,37 @@ local function find_item_slot(req_item)
     return nil
 end
 
--- Use an Request Logistics Pipes to request an item
-local function request_item_from_lp(item)
+-- Find request pipe
+local function find_lp_request_pipe()
     for _, name in pairs(peripheral.getNames()) do
-        if peripheral.getType(name) == "LogisticsPipes:Request" then -- Logistics Request Pipe
-            print("Requesting item: " .. item.id .. " (data: " .. (item.data or "nil") .. "), status: " .. tostring(status))
-
-            local pipe = peripheral.wrap(name)
-            local lp = pipe.getLP()
-            local id_builder = lp.getItemIdentifierBuilder()
-            id_builder.setItemID(item.id)
-            if item.data then
-                id_builder.setItemData(item.data)
-            end
-            local id = id_builder.build()
-            cc.pretty_print(id)
-            local status, list = pipe.makeRequest(id, 1)
-
-            break
+        if peripheral.getType(name) == "LogisticsPipes:Request" then
+            return peripheral.wrap(name)
         end
     end
     error("No Logistics Pipes provider found. Make sure you have a Logistics Pipes network set up and a provider module in the turtle's inventory.")
+end
+
+-- Use an Request Logistics Pipes to request an item
+local function request_item_from_lp(item)
+    local pipe = find_lp_request_pipe()
+
+    local lp = pipe.getLP()
+    local id_builder = lp.getItemIdentifierBuilder()
+    id_builder.setItemID(item.id)
+    if item.data then
+        id_builder.setItemData(item.data)
+    end
+    local stack = id_builder.build().makeStack(1)
+    print(stack.getType())
+
+    repeat
+        local status, list = pipe.makeRequest(stack)
+        print("Requesting item: " .. item.id .. " (data: " .. (item.data or "nil") .. "), status: " .. tostring(status))
+        if status ~= "DONE" then
+            os.sleep(1)
+            print("...retrying in 1s")
+        end
+    until status ~= "DONE"
 end
 
 local function get_or_wait_for_item(item)
