@@ -3,8 +3,10 @@
 --
 
 local util = require 'src.util'
+local pretty = require "cc.pretty"
 
-local HEAT_PLATING = {id = "ic2:reactorheatplating"}
+
+local HEAT_PLATING = {id = "ic2:itemreactorplating"}
 local COMP_VENT = {id = "ic2:reactorventspread"}
 local ELEC_OC_HEAT_VENT = {id = "ic2:itemheatvent"}
 local FUEL_ROD = {id = "ic2:itemreactorrods", data = 13} -- NetherStart Enriched Dual Rod
@@ -46,7 +48,7 @@ local function request_item_from_lp(item)
     for _, name in pairs(peripheral.getNames()) do
         if peripheral.getType(name) == "LogisticsPipes:Request" then -- Logistics Request Pipe
             print("Requesting item: " .. item.id .. " (data: " .. (item.data or "nil") .. "), status: " .. tostring(status))
-            
+
             local pipe = peripheral.wrap(name)
             local lp = pipe.getLP()
             local id_builder = lp.getItemIdentifierBuilder()
@@ -54,7 +56,9 @@ local function request_item_from_lp(item)
             if item.data then
                 id_builder.setItemData(item.data)
             end
-            local status, list = lp.makeItemRequest(id_builder.build(), 1)
+            local id = id_builder.build()
+            cc.pretty_print(id)
+            local status, list = pipe.makeRequest(id, 1)
 
             break
         end
