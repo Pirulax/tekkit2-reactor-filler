@@ -46,12 +46,12 @@ return {
         local dir = peripheral.getName(inventory_peripheral)
         if dir == 'top' then
             turtle.dropUp(count)
-        elseif dir == 'down' then
+        elseif dir == 'bottom' then
             turtle.dropDown(count)
         elseif dir == 'front' then
             turtle.drop(count)
         else
-            error("Inventory peripheral is not in a valid position (top, down, front): " .. dir)
+            error("Inventory peripheral is not in a valid position (top, bottom, front): " .. dir)
         end
     end,
 }
