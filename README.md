@@ -12,7 +12,14 @@ wget https://gist.githubusercontent.com/SquidDev/e0f82765bfdefd48b0b15a5c06c0603
 clone https://github.com/Pirulax/tekkit2-reactor-filler.git filler
 ```
 
-3. Run
+3. Put fuel in the turtle
+
+4. Run
 ```shell
 ./filler/main.lua
+```
+Example:
+```shell
+# Use the 4chamber pattern to fill 32 consecutive reactors
+./filler/main.lua fill 4chamber 32
 ```
